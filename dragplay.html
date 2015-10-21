@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Drag play</title>
+    <style>
+    .circle {
+    	position: absolute;
+        height: 100px;
+        width: 100px;
+        background-color: red;
+        border-radius: 50%;
+    }
+    .circle2 {
+    	transition:0.2s all linear;
+    	position: absolute;
+        height: 100px;
+        width: 100px;
+        background-color: green;
+        border-radius: 50%;
+        left: 400px;
+    }
+    
+    .pos {
+        height: 100px;
+        width: 174px;
+        background-color: white;
+        left: 50%;
+        position: absolute;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="circle"></div>
+    <div class="circle2"></div>
+    <div class="pos1"></div>
+    <div class="pos2"></div>
+</body>
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script>
+$(".circle").draggable({
+    drag: function(event, ui) {
+        // console.log(ui.position);
+        $('.pos1').text(ui.position.left + ',' + ui.position.top);
+        
+        var pos=$('.circle2').position();
+        $('.pos2').text(pos.left + ',' + pos.top);
+        if(Math.abs(pos.left-ui.position.left) <200 && Math.abs(pos.top-ui.position.top) <200){
+        	var leftt=pos.left+50;
+        	var rightt=pos.top+50;
+        	$('.circle2').css('left',leftt);
+        	$('.circle2').css('top',rightt);
+        }
+    }
+});
+</script>
+
+</html>

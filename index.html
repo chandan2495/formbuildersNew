@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Directive</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="css/roboto.css" rel="stylesheet">
+    <link href="css/material.css" rel="stylesheet">
+    <link href="css/ripples.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body ng-app='firstModule'>
+    <div class="container-fluid">
+        <div class="row">
+            <builder></builder>
+            <dropper></dropper>
+        </div>        
+
+    </div>
+</body>
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="js/ripples.js"></script>
+<script src="js/material.js"></script>
+<script src="../angular.min.js"></script>
+<script src="../angular-dragdrop.min.js"></script>
+<script src="app.js"></script>
+<script>
+$(document).ready(function() {
+    // This command is used to initialize some elements and make them work properly
+    $.material.init();
+});
+</script>
+
+</html>
