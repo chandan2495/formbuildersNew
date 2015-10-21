@@ -14,7 +14,7 @@
 
 <body ng-app='firstModule'>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row" ng-controller="maincontroller">
             <builder></builder>
             <dropper></dropper>
         </div>        
@@ -27,7 +27,7 @@
 <script src="js/ripples.js"></script>
 <script src="js/material.js"></script>
 <script src="../angular.min.js"></script>
-<script src="../angular-dragdrop.min.js"></script>
+<!-- <script src="../angular-dragdrop.min.js"></script> -->
 <script src="app.js"></script>
 <script>
 $(document).ready(function() {

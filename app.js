@@ -1,11 +1,60 @@
 
 
-var app=angular.module('firstModule',['ngDragDrop']);
+var app=angular.module('firstModule',[]);
 
-app.controller('dropcontroller', function($scope){
+app.controller('maincontroller', function($scope){	
 	$scope.items=[];
 	var textbox={"textbox": "<div class='form-group after-drop'><label for='' class='col-lg-2 control-label'>Text</label><div class='col-lg-10'><input type='text' class='form-control' placeholder='Email'></div></div>"};
     $scope.items.push(textbox);
+
+	$scope.count=2;
+	$scope.dropCallback = function(event, ui){
+		// ui.draggable.removeClass("highlight");
+		$('.droparea').hide();
+		// var dropped = ui.draggable;
+		var droppedOn = $("#dropperStyle");
+		// var copy=$(dropped).clone();
+		// copy.find("input").removeAttr('readonly');				
+		// copy.addClass('after-drop');
+		// $(copy).appendTo(droppedOn); 
+		$($scope.items[0].textbox).appendTo(droppedOn)
+		.draggable({
+			axis:"y",
+			revert : "invalid"	,
+			containment: '#dropperStyle',
+			stop : $scope.stopCallback			
+		}).attr("id","question"+$scope.count);
+		$scope.count++;
+	};
+	$scope.startCallback = function(event,ui){
+				var $draggable = $(event.target);
+				ui.helper.width($draggable.width());
+				ui.helper.height($draggable.height());
+				ui.helper.addClass("highlight");
+				$('.droparea').show();
+				console.log(ui.offset);
+				console.log("Question 2 "+ $("#question1").offset().left + ", " + $("#question1").offset().top);
+				if($('#question1').offset().left<(ui.offset.left)){
+				$(".after-drop").each(function(){
+					if($(this).offset().top < ui.offset.top)
+					{
+						$(".droparea").remove();
+						var newdroparea=$("<div class='form-group droparea'></div>").insertAfter(this).show();						
+						newdroparea.droppable({
+							accept : ".t1",
+							drop : $scope.dropCallback
+						});						
+					}					
+				});
+			}
+		}	
+
+	$scope.stopCallback = function(){
+		$('.droparea').hide();
+	};			
+
+				// $draggable.css('opacity', '0');
+					
 });
 
 app.directive('builder',  function(){
@@ -13,23 +62,17 @@ app.directive('builder',  function(){
 	return {
 		compile: function(tElem, attrs){
 			$.material.init();
+			
 			return function(scope,elem,attrs){
-				scope.makeborder=false;
-				scope.startDrag= function(){
-					scope.makeborder=true;
-					
-				};		
-				scope.startCallback = function(event,ui){
-					// var $draggable = $(event.target);
-					// ui.helper.width($draggable.width());
-					// ui.helper.height($draggable.height());
-					// ui.helper.addClass("highlight");
-					// $('.droparea').show();
-					// $draggable.css('opacity', '0');
-			};
-			scope.dragstart = function(event,ui){
-				console.log(ui.position);
-			};
+			$(".t1").draggable({
+				revert: "invalid",
+				drag : scope.startCallback,
+				helper : 'clone',
+				zIndex : 350,
+				cursor : 'grab',
+				stop : scope.stopCallback						
+			});
+
 			};
 		},
 		// name: '',
@@ -52,6 +95,23 @@ app.directive('builder',  function(){
 app.directive('dropper', function(){
 	// Runs during compile
 	return {
+		compile: function(tElem, attrs){
+			$.material.init();
+
+			return function(scope,elem,attrs){
+			$("#question1").draggable({
+				revert: "invalid",								
+				zIndex : 350,
+				axis : "y",
+				containment: '#dropperStyle'
+			});
+			$(".droparea").droppable({
+				accept : ".t1",
+				drop : scope.dropCallback
+			});
+				
+			};
+		},
 		// name: '',
 		// priority: 1,
 		// terminal: true,
@@ -61,36 +121,36 @@ app.directive('dropper', function(){
 		// restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
 		// template: '',
 		templateUrl: 'dropperTemplate.html',
-		replace: true,
+		replace: true
 		// transclude: true,
 		// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
-		link: function(scope, elem, attrs) {
-			scope.count=2;
-			scope.dropCallback = function(event, ui){
-				// ui.draggable.removeClass("highlight");
-				$('.droparea').hide();
-				// var dropped = ui.draggable;
-				var droppedOn = $("#dropperStyle");
-				// var copy=$(dropped).clone();
-				// copy.find("input").removeAttr('readonly');				
-				// copy.addClass('after-drop');
-				// $(copy).appendTo(droppedOn); 
-				$(scope.items[0].textbox).appendTo(droppedOn)
-				.draggable({
-					axis:"y",
-					revert : "invalid"
-				}).attr("id","question"+scope.count);
-				scope.count++;
-			};
-			scope.startCallback = function(event,ui){
-					var $draggable = $(event.target);
-					ui.helper.width($draggable.width());
-					ui.helper.height($draggable.height());
-					ui.helper.addClass("highlight");
-					$('.droparea').show();
-					console.log(ui.position);
-					// $draggable.css('opacity', '0');
-			};						
-		}
+		// link: function(scope, elem, attrs) {
+		// 	scope.count=2;
+		// 	scope.dropCallback = function(event, ui){
+		// 		// ui.draggable.removeClass("highlight");
+		// 		$('.droparea').hide();
+		// 		// var dropped = ui.draggable;
+		// 		var droppedOn = $("#dropperStyle");
+		// 		// var copy=$(dropped).clone();
+		// 		// copy.find("input").removeAttr('readonly');				
+		// 		// copy.addClass('after-drop');
+		// 		// $(copy).appendTo(droppedOn); 
+		// 		$(scope.items[0].textbox).appendTo(droppedOn)
+		// 		.draggable({
+		// 			axis:"y",
+		// 			revert : "invalid"
+		// 		}).attr("id","question"+scope.count);
+		// 		scope.count++;
+		// 	};
+		// 	scope.startCallback = function(event,ui){
+		// 			var $draggable = $(event.target);
+		// 			ui.helper.width($draggable.width());
+		// 			ui.helper.height($draggable.height());
+		// 			ui.helper.addClass("highlight");
+		// 			$('.droparea').show();
+		// 			console.log(ui.position);
+		// 			// $draggable.css('opacity', '0');
+		// 	};						
+		// }
 	};
 });
