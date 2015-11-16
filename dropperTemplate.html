@@ -1,13 +1,11 @@
-<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="dropperStyle">
+<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="dropperStyle" ng-controller="maincontroller">
 		<form action="" method="POST" role="form" class="dropform">
 			<div class="form-group droparea"></div>
 			<div class="form-group after-drop" id="question1">
-				<label for="inputEmail" class="col-lg-2 control-label">Survey Title </label>
+				<label for="inputEmail" class="col-lg-2 control-label">{{title}} </label>
                 <div class="col-lg-10">
-                            <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+                            <input type="text" class="form-control" id="inputEmail" placeholder="Email" ng-model="title">
 	            </div>
 			</div>		
 		</form>
-
-
 </div>

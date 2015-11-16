@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="docsIsolateScopeDirective">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Isolated Scopes</title>
+    <!-- Latest compiled and minified CSS & JS -->
+    <link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div ng-controller="Controller">
+        <div class="addnew">
+            <new-customer form1='form1' customerid='customerid'></new-customer>
+            <hr>            
+            <new-admin form1='form1' adminid='adminid'></new-admin>
+            <hr>            
+        </div>
+        <button type="button" class="btn btn-primary" ng-click="addCustomer()">Add Customer</button>
+        <button type="button" class="btn btn-primary" ng-click="addAdmin()">Add Admin</button>
+        <div class="well well-lg">
+        	<pre>{{form1 | json}}</pre>
+        </div>
+    </div>
+</body>
+<script src="../angular.min.js"></script>
+<script type="text/javascript" src="directivescript1.js"></script>
+
+</html>

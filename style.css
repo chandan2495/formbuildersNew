@@ -12,6 +12,7 @@
     background-color: #ECF2F7;
     border: 1px dashed #aaa;
     display: none;
+    transition:0.5s all ease-in;
 }
 
 #dropper, #dropperStyle{

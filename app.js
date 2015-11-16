@@ -2,10 +2,18 @@
 
 var app=angular.module('firstModule',[]);
 
-app.controller('maincontroller', function($scope){	
-	$scope.items=[];
-	var textbox={"textbox": "<div class='form-group after-drop'><label for='' class='col-lg-2 control-label'>Text</label><div class='col-lg-10'><input type='text' class='form-control' placeholder='Email'></div></div>"};
-    $scope.items.push(textbox);
+app.controller('maincontroller', function($scope,$compile){	
+	$scope.master=[];
+	$scope.templates={
+		"textbox" :  "<div class='form-group after-drop'><label for='textbox1' class='col-lg-2 control-label'> {{email}}</label><div class='col-lg-10'><input type='text' class='form-control' placeholder='Email' ng-modal='email' id='textbox1'></div></div>"
+	};
+	$scope.items=[{
+		text : {
+			email : '',
+		}
+	}];    
+	var textbox={"textbox": "<div class='form-group after-drop'><label for='' class='col-lg-2 control-label'> {{email}}</span></label><div class='col-lg-10'><input type='text' class='form-control' placeholder='Email' ng-modal='email'></div></div>"};
+	
 
 	$scope.count=2;
 	$scope.dropCallback = function(event, ui){
@@ -17,14 +25,15 @@ app.controller('maincontroller', function($scope){
 		// copy.find("input").removeAttr('readonly');				
 		// copy.addClass('after-drop');
 		// $(copy).appendTo(droppedOn); 
-		$($scope.items[0].textbox).appendTo(droppedOn)
+		var dropped=$compile($scope.templates.textbox)($scope);
+		$(dropped).appendTo(droppedOn)
 		.draggable({
 			axis:"y",
 			revert : "invalid"	,
-			containment: '#dropperStyle',
+			containment: '#dropperStyle',			
 			stop : $scope.stopCallback			
 		}).attr("id","question"+$scope.count);
-		$scope.count++;
+		$scope.count++;		
 	};
 	$scope.startCallback = function(event,ui){
 				var $draggable = $(event.target);
